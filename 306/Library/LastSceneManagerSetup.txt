@@ -1,0 +1,4 @@
+sceneSetups:
+- path: C:/Users/Sherry/Documents/GitHub/cmpt306/BroCode/Assets/levelOne.unity
+  isLoaded: 1
+  isActive: 1
