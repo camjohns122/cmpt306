@@ -8,30 +8,42 @@ public class Controller : MonoBehaviour
 	private bool isGrounded = false;		// Check if the player is on a platform.
 	private bool jump = false;				// Jump is held.
 	private bool jumpCancel = false;		// Jump is released.
-	private float jumpTimer;				// Makes the above possible.
 		
 	public float speed = 8f;				// Running speed.
 	public float acceleration = 8f;			// Acceleration.
 	public float jumpSpeed = 14f;			// Velocity for the highest jump.
-	public float jumpLeeway = 0.15f;		// The amount of time a player can still jump after falling.
 
-	// Update is called once per frame
+	public float jumpLeeway = 0.15f;		// The amount of time a player can still jump after falling.
+	private float jumpTimer;				// Makes the above possible.
+
+	private Animator myAnimator;			// Animator variable that is needed.
+	private float horizontal;				// Assists horizontal animations.
+
+	void Start()
+	{
+		// Initializing the animator.
+		myAnimator = GetComponent<Animator>();
+	}
+
 	void Update ()
 	{
+		// Assings horizontal which is needed for animations.
+		horizontal = Input.GetAxisRaw ("Horizontal");
+
 		// Assigns leftOrRight if player is going left or right.
 		if( Input.GetAxisRaw("Horizontal") < 0 )
 		{
 			// Flips the sprite if the player goes left.
 			// Assigns -1 if going left.
 			leftOrRight = -1;
-			GetComponentInChildren<SpriteRenderer> ().flipX = true;
+			transform.localScale = new Vector3(-1f, 1f, 1f);
 		}
 		else if( Input.GetAxisRaw("Horizontal") > 0 )
 		{
 			// Flips the sprite if the player goes right.
 			// Assings 1 if going right.
 			leftOrRight = 1;
-			GetComponentInChildren<SpriteRenderer> ().flipX = false;
+			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 		else
 		{
@@ -75,9 +87,17 @@ public class Controller : MonoBehaviour
 	void FixedUpdate ()
 	{
 		// jumpTimer only updates when the player is on the ground.
-		if(isGrounded)
+		if (isGrounded)
 		{
 			jumpTimer = Time.time;
+
+			// The jump animation is set to false when on the ground.
+			myAnimator.SetBool ("jump", false);
+		}
+		else
+		{
+			// The jump animation is set to true when in the air.
+			myAnimator.SetBool("jump", true);
 		}
 
 		// If the player falls off a platform, they still have a fraction of a second where a jump is still possible.
@@ -91,6 +111,9 @@ public class Controller : MonoBehaviour
 		// This moves the player left or right.
 		// This will make it so that there is a max speed in the left or right.
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * speed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
+
+		// This is the running animation.
+		myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
 
 		// If the player is stationary, he will stop dead in his tracks.
 		if (leftOrRight == 0)
