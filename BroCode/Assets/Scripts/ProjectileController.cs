@@ -12,7 +12,7 @@ public class ProjectileController : MonoBehaviour {
 		// Finds the Object that has a Controller script attached to it (Player)
 		player = FindObjectOfType<Controller> ();
 
-		// If the player is facing left, the projectile will shoot left.
+		// If the player is facing left, the projectile will shoot left. Otherwise, the projectile will shoot right.
 		if (player.transform.localScale.x < 0) {
 			speed = -speed;
 		}
