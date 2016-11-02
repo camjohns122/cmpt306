@@ -12,7 +12,11 @@ public class PlayerProjectileDamage : MonoBehaviour
 	{
 		if (col.gameObject.tag == "Enemy")
 		{
-			col.GetComponent<BossOneHealth> ().giveDamage (damageToGive);
+			// If boss one exists, give damage to him.
+			if (col.GetComponent<BossOneHealth> () != null)
+			{
+				col.GetComponent<BossOneHealth> ().giveDamage (damageToGive);
+			}
 		}
 	}
 }
