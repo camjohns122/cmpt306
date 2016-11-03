@@ -17,7 +17,7 @@ public class DamagePlayerWhenTouched : MonoBehaviour
 		// When the player has low confidence, the boss does low damage.
 		if (col.gameObject.tag == "Player")
 		{
-			col.GetComponent<PlayerHealth> ().giveDamage (1 + damageToGive * confidence.GetComponent<Confidence> ().getConfidence ()/25);
+			col.GetComponent<PlayerHealth> ().giveDamage (1 + damageToGive * confidence.GetComponent<Confidence> ().getConfidence ()/33);
 		}
 	}
 }

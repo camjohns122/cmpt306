@@ -19,7 +19,7 @@ public class PlayerProjectileDamage : MonoBehaviour
 			// Add the amount of confidence to the damage given.
 			if (col.GetComponent<BossOneHealth> () != null)
 			{
-				col.GetComponent<BossOneHealth> ().giveDamage (damageToGive + confidence.GetComponent<Confidence> ().getConfidence ()/25f);
+				col.GetComponent<BossOneHealth> ().giveDamage (damageToGive + confidence.GetComponent<Confidence> ().getConfidence ()/33f);
 			}
 		}
 	}

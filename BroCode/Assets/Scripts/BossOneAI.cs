@@ -7,7 +7,7 @@ public class BossOneAI : MonoBehaviour
 	private bool isGrounded = false;		// Check if the enemy is on a platform.
 	private bool jump = false;				// Jump is active.
 
-	public float speed = 4f;				// Running speed.
+	public float speed = 3f;				// Running speed.
 	public float acceleration = 2f;			// Acceleration.
 	public float jumpSpeed = 14f;			// Velocity for the highest jump.
 
@@ -19,10 +19,15 @@ public class BossOneAI : MonoBehaviour
 
 	private Animator myAnimator;			// Animator variable that is needed.
 
+	public GameObject confidence;			// Make sure to attach confidence.
+
 	void Start()
 	{
 		// Initializing the animator.
 		myAnimator = GetComponent<Animator>();
+
+		// Make changes based on confidence
+		speed = speed + confidence.GetComponent<Confidence> ().getConfidence ()/33f;
 	}
 	
 	void Update ()
@@ -65,7 +70,9 @@ public class BossOneAI : MonoBehaviour
 
 			// The random time has a value between 1 and 3.
 			// The random jump height is a value between 0.5 and 1.
-			randomTime = Random.Range (1f, 3f);
+			// If confidence is high, the boss will jump every 1 second.
+			// If the confidence is low, the boss will jump every 1 to 3 seconds.
+			randomTime = Random.Range (1f, 5f - confidence.GetComponent<Confidence> ().getConfidence ()/25f);
 			randomJumpHeight = Random.Range (0.5f, 1f);
 		}
 	}
