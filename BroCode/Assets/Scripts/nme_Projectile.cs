@@ -22,7 +22,6 @@ public class nme_Projectile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-
 		// Make the projectile move horizontally.
 		GetComponent<Rigidbody2D>().velocity = new Vector2 (speed, GetComponent<Rigidbody2D>().velocity.y);﻿
 	}
@@ -34,6 +33,7 @@ public class nme_Projectile : MonoBehaviour {
 		if (col.gameObject.tag == "Player")
 		{
 			confidence.GetComponent<Confidence>().loseConfidence (confidenceToLose);
+			Destroy (gameObject);
 		}
 
 		// If the Egg gets hit by the player's projectile, destroys both.
