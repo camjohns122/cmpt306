@@ -12,6 +12,7 @@ public class BossOneAI : MonoBehaviour
 	public float jumpSpeed = 14f;			// Velocity for the highest jump.
 
 	private float timeToJump = 3f;			// To tell the AI when to jump.
+	private float timeToShoot = 2f;			// To tell the AI when to shoot.
 	private float randomTime = 2f;			// A random time value.
 	private float randomJumpHeight = 0.75f; // A random jump height.
 
@@ -21,35 +22,44 @@ public class BossOneAI : MonoBehaviour
 
 	public GameObject confidence;			// Make sure to attach confidence.
 
+	public Transform firePoint; 			// The starting point where the projectile is fired from.
+	public GameObject projectile; 			// The item that the enemy shoots.
+
 	void Start()
 	{
 		// Initializing the animator.
 		myAnimator = GetComponent<Animator>();
 
 		// Make changes based on confidence
-		speed = speed + confidence.GetComponent<Confidence> ().getConfidence ()/33f;
+		speed = speed + confidence.GetComponent<Confidence> ().getConfidence ()/50f;
 	}
 	
 	void Update ()
 	{
 		// If the player is to the left of the enemy, he will go left.
 		// If the player is to the right of the enemy, he will go right.
-		if (player.transform.position.x < transform.position.x)
+		if (player.transform.position.x < transform.position.x && Mathf.Abs(player.transform.position.x - transform.position.x) <= 8)
 		{
 			leftOrRight = -1;
 			transform.localScale = new Vector3(-1f, 1f, 1f);
 		}
-		else if (player.transform.position.x > transform.position.x)
+		else if (player.transform.position.x > transform.position.x && Mathf.Abs(player.transform.position.x - transform.position.x) <= 8)
 		{
 			leftOrRight = 1;
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
-		else
+		else if (player.transform.position.x < transform.position.x && Mathf.Abs(player.transform.position.x - transform.position.x) > 8)
 		{
-			leftOrRight = 0;
+			leftOrRight = 1;
+			transform.localScale = new Vector3(-1f, 1f, 1f);
+		}
+		else if (player.transform.position.x > transform.position.x && Mathf.Abs(player.transform.position.x - transform.position.x) > 8)
+		{
+			leftOrRight = -1;
+			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 
-		// The enemy will jump every 1-3 seconds.
+		// The enemy will jump every 1-5 seconds (dependent on confidence).
 		if (Time.time > timeToJump)
 		{
 			timeToJump += randomTime;
@@ -57,6 +67,22 @@ public class BossOneAI : MonoBehaviour
 			if (isGrounded)
 			{
 				jump = true;
+			}
+		}
+
+		// The enemy will shoot every 1-5 seconds (dependent on confidence).
+		if (Time.time > timeToShoot)
+		{
+			timeToShoot += randomTime;
+
+			// Made an array of GameObjects to check how many Boss Projectiles are on the screen.
+			GameObject[] array;
+			array = GameObject.FindGameObjectsWithTag("Boss Projectile");
+
+			// Make the projectile if there aren't too many boss projectiles on the screen.
+			if (array.Length < 3)
+			{
+				var clone = Instantiate (projectile, firePoint.position, firePoint.rotation);
 			}
 		}
 	}

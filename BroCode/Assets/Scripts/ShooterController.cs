@@ -17,7 +17,7 @@ public class ShooterController : MonoBehaviour {
 		if (arr.Length < 2) 
 		{
 			// If the Return key is pressed, the projectile will fire.
-			if (Input.GetKeyDown (KeyCode.Return)) {
+			if (Input.GetButtonDown ("Fire1")) {
 				// Make a clone of the Projectile prefab
 				var clone = Instantiate (projectile, firePoint.position, firePoint.rotation);
 
