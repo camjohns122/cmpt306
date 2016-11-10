@@ -19,10 +19,14 @@ public class Controller : MonoBehaviour
 	private Animator myAnimator;			// Animator variable that is needed.
 	private float horizontal;				// Assists horizontal animations.
 
+    private float yDirection;
+
 	void Start()
 	{
 		// Initializing the animator.
 		myAnimator = GetComponent<Animator>();
+        myAnimator.SetBool ("falling", false);
+        yDirection = transform.position.y;
 	}
 
 	void Update ()
@@ -62,6 +66,13 @@ public class Controller : MonoBehaviour
 		{
 			jumpCancel = true;
 		}
+
+        if (transform.position.y - yDirection < 0)
+        {
+            myAnimator.SetBool("falling", true);
+        }
+        yDirection = transform.position.y;
+
 	}
 
 	// Function to tell if the player is on a platform
