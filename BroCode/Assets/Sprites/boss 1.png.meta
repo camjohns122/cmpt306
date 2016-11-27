@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 12718cc392edc463ab871a8949eda4b2
-timeCreated: 1476298277
+guid: ba7d4667d45e04e0e8b466a7161c974c
+timeCreated: 1480275461
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Boss_0
-    21300002: Boss_1
-    21300004: Boss_2
-    21300006: Boss_3
-    21300008: Boss_4
-    21300010: Boss_5
-    21300012: Boss_6
+    21300000: boss 1_0
+    21300002: boss 1_1
+    21300004: boss 1_2
+    21300006: boss 1_3
+    21300008: boss 1_4
+    21300010: boss 1_5
+    21300012: boss 1_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -60,7 +60,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boss_0
+      name: boss 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -73,7 +73,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Boss_1
+      name: boss 1_1
       rect:
         serializedVersion: 2
         x: 128
@@ -86,7 +86,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Boss_2
+      name: boss 1_2
       rect:
         serializedVersion: 2
         x: 256
@@ -99,7 +99,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Boss_3
+      name: boss 1_3
       rect:
         serializedVersion: 2
         x: 0
@@ -112,7 +112,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Boss_4
+      name: boss 1_4
       rect:
         serializedVersion: 2
         x: 128
@@ -125,7 +125,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Boss_5
+      name: boss 1_5
       rect:
         serializedVersion: 2
         x: 256
@@ -138,10 +138,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Boss_6
+      name: boss 1_6
       rect:
         serializedVersion: 2
-        x: 0
+        x: 256
         y: 0
         width: 128
         height: 128
