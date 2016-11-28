@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: ba04e4f4e19f742e4abce0c7d92192c4
-timeCreated: 1480368047
+guid: 1dd859b04c2c8eb4e9c785f0038f1b6f
+timeCreated: 1480367032
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Bottle (1)_0
-    21300002: Bottle (1)_1
-    21300004: Bottle (1)_2
-    21300006: Bottle (1)_3
+    21300000: boss 1_0
+    21300002: boss 1_1
+    21300004: boss 1_2
+    21300006: boss 1_3
+    21300008: boss 1_4
+    21300010: boss 1_5
+    21300012: boss 1_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,52 +60,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bottle (1)_0
+      name: boss 1_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 70
-        width: 26
-        height: 46
+        x: 12
+        y: 280
+        width: 96
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Bottle (1)_1
+      name: boss 1_1
       rect:
         serializedVersion: 2
-        x: 76
-        y: 80
-        width: 46
-        height: 26
+        x: 148
+        y: 272
+        width: 84
+        height: 104
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Bottle (1)_2
+      name: boss 1_2
       rect:
         serializedVersion: 2
-        x: 22
-        y: 12
-        width: 26
-        height: 46
+        x: 276
+        y: 272
+        width: 84
+        height: 104
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Bottle (1)_3
+      name: boss 1_3
       rect:
         serializedVersion: 2
-        x: 70
-        y: 22
-        width: 46
-        height: 26
+        x: 12
+        y: 128
+        width: 104
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boss 1_4
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 152
+        width: 92
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boss 1_5
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 144
+        width: 76
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boss 1_6
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 0
+        width: 96
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
