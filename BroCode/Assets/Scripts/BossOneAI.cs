@@ -25,6 +25,9 @@ public class BossOneAI : MonoBehaviour
 	public Transform firePoint; 			// The starting point where the projectile is fired from.
 	public GameObject projectile; 			// The item that the enemy shoots.
 
+    private float yDirection;               // used to detect when player begins falling
+
+
 	void Start()
 	{
 		// Initializing the animator.
@@ -32,6 +35,8 @@ public class BossOneAI : MonoBehaviour
 
 		// Make changes based on confidence
 		speed = speed + confidence.GetComponent<Confidence> ().getConfidence ()/50f;
+        myAnimator.SetBool("falling", false);
+
 	}
 	
 	void Update ()
@@ -85,6 +90,11 @@ public class BossOneAI : MonoBehaviour
 				var clone = Instantiate (projectile, firePoint.position, firePoint.rotation);
 			}
 		}
+        if (transform.position.y - yDirection < 0)
+        {
+            myAnimator.SetBool("falling", true);
+        }
+        yDirection = transform.position.y;
 	}
 
 	// The enemey can only jump when he is grounded.

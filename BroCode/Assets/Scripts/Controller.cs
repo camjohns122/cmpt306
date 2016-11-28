@@ -19,7 +19,7 @@ public class Controller : MonoBehaviour
 	private Animator myAnimator;			// Animator variable that is needed.
 	private float horizontal;				// Assists horizontal animations.
 
-    private float yDirection;
+    private float yDirection;               // used to detect when player begins falling
 
 	void Start()
 	{
