@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: ba7d4667d45e04e0e8b466a7161c974c
-timeCreated: 1480275461
-licenseType: Free
+guid: cd14c3d2fe5e0e34495e5d3f45e0e3c7
+timeCreated: 1480360905
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: boss 1_0
-    21300002: boss 1_1
-    21300004: boss 1_2
-    21300006: boss 1_3
-    21300008: boss 1_4
-    21300010: boss 1_5
-    21300012: boss 1_6
+    21300000: boss_0
+    21300002: boss_1
+    21300004: boss_2
+    21300006: boss_3
+    21300008: boss_4
+    21300010: boss_5
+    21300012: boss_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -60,51 +60,51 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss 1_0
+      name: boss_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
-        width: 128
-        height: 128
+        x: 12
+        y: 280
+        width: 96
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: boss 1_1
+      name: boss_1
       rect:
         serializedVersion: 2
-        x: 128
-        y: 256
-        width: 128
-        height: 128
+        x: 148
+        y: 272
+        width: 84
+        height: 104
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: boss 1_2
+      name: boss_2
       rect:
         serializedVersion: 2
-        x: 256
-        y: 256
-        width: 128
-        height: 128
+        x: 276
+        y: 272
+        width: 84
+        height: 104
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: boss 1_3
+      name: boss_3
       rect:
         serializedVersion: 2
-        x: 0
+        x: 12
         y: 128
-        width: 128
+        width: 104
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -112,38 +112,38 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: boss 1_4
+      name: boss_4
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 128
-        height: 128
+        x: 136
+        y: 152
+        width: 92
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: boss 1_5
+      name: boss_5
       rect:
         serializedVersion: 2
-        x: 256
-        y: 128
-        width: 128
-        height: 128
+        x: 280
+        y: 144
+        width: 76
+        height: 104
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: boss 1_6
+      name: boss_6
       rect:
         serializedVersion: 2
-        x: 256
+        x: 268
         y: 0
-        width: 128
+        width: 96
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
