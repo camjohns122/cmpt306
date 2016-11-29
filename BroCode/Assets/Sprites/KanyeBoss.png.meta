@@ -1,9 +1,16 @@
 fileFormatVersion: 2
 guid: cc637d0bf5fe7452596faf48a0bf6901
-timeCreated: 1480362738
+timeCreated: 1480394294
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: KanyeBoss_0
+    21300002: KanyeBoss_1
+    21300004: KanyeBoss_2
+    21300006: KanyeBoss_3
+    21300008: KanyeBoss_4
+    21300010: KanyeBoss_5
+    21300012: KanyeBoss_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +45,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -51,7 +58,98 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: KanyeBoss_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 272
+        width: 84
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: KanyeBoss_1
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 272
+        width: 84
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: KanyeBoss_2
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 280
+        width: 96
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: KanyeBoss_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 144
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: KanyeBoss_4
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 152
+        width: 84
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: KanyeBoss_5
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 132
+        width: 104
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: KanyeBoss_6
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 4
+        width: 96
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
