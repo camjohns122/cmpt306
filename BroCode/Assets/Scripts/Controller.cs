@@ -21,12 +21,25 @@ public class Controller : MonoBehaviour
 
     private float yDirection;               // used to detect when player begins falling
 
+    private Rigidbody2D player;             // reference to players Rigidbody
+
+    private float topAngle;
+    private float sideAngle;
+
+
+
 	void Start()
 	{
 		// Initializing the animator.
 		myAnimator = GetComponent<Animator>();
         myAnimator.SetBool ("falling", false);
         yDirection = transform.position.y;
+        player = GetComponent<Rigidbody2D>();   //set references to game objects
+        Vector2 size = GetComponent<BoxCollider2D>().size;
+        topAngle = Mathf.Atan(size.x / size.y) * Mathf.Rad2Deg;
+        sideAngle = 90.0f - topAngle;
+
+
 	}
 
 	void Update ()
@@ -83,7 +96,45 @@ public class Controller : MonoBehaviour
 			// Player is touching the ground.
 			isGrounded = true;
 		}
+        
+        // knockback if hit by an enemy
+        if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Boss Projectile")
+        {
+
+            Vector3 v = (Vector3)col.contacts[0].point - transform.position;
+            if (Vector3.Angle(v, transform.right) <= sideAngle)
+            {
+                myAnimator.SetBool("hit", true);
+                player.AddForce(new Vector2(-800, 0));
+            }
+            else if (Vector3.Angle(v, -transform.right) <= sideAngle)
+            {
+                player.AddForce(new Vector2(800, 0));
+                myAnimator.SetBool("hit", true);
+            }
+            else if (leftOrRight == -1)
+            {
+                myAnimator.SetBool("hit", true);
+                player.AddForce(new Vector2(800, 0));
+            }
+            else
+            {
+                player.AddForce(new Vector2(-800, 0));
+                myAnimator.SetBool("hit", true);
+            }
+            
+
+        }
 	}
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Boss Projectile")
+        {
+            player.AddForce(new Vector2(-800, 0));
+            myAnimator.SetBool("hit", true);
+        }
+    }
 
 	// Function to tell if the player has left a platform
 	void OnCollisionExit2D(Collision2D col)
@@ -97,6 +148,8 @@ public class Controller : MonoBehaviour
 
 	void FixedUpdate ()
 	{
+        myAnimator.SetBool("hit", false);
+
 		// jumpTimer only updates when the player is on the ground.
 		if (isGrounded)
 		{
