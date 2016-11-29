@@ -3,19 +3,15 @@ using System.Collections;
 
 public class Boss2AI : MonoBehaviour
 {
-	public DecisionTree tree;
-
-
-
-
+	public DecisionTree tree;				//Decision Tree for AI
 
 	private Animator myAnimator;			// Animator variable that is needed.
 
 	public GameObject confidence;			// Make sure to attach confidence.
 
 	//Player Variables
+	//----To detect Hero's Location and Distance from Boss
 	private Controller Hero;
-
 	public LayerMask isPlayer;
 	public float HeroNearDistance;
 	public bool HeroNear;
@@ -25,10 +21,10 @@ public class Boss2AI : MonoBehaviour
 	private int leftOrRight = 0;			// Input for left, right, and stationary.
 	private bool isGrounded = true;		// Check if the enemy is on a platform.
 	private bool jump;				// Jump is active.
-	public float bossHealth;
-	private float pushForce = 500f;
-	private float jumpForce = 1200f;
-	public float acceleration = 2f;
+	public float bossHealth;				//Health
+	private float pushForce = 500f;			//used simply to push boss back down off highest platform
+	private float jumpForce = 1200f;		//Big ol jump force for boss to jump to highest 
+	public float acceleration = 2f;	
 	public float moveSpeed = 3f;
 	private float yDirection;
 
@@ -72,19 +68,35 @@ public class Boss2AI : MonoBehaviour
 
 		// Initializing the animator.
 		myAnimator = GetComponent<Animator>();
+
+		//Initialize the Tree and call for it to build
 		tree = new DecisionTree ();
 		BuildDecisionTree ();
+
+		//Grab Hero
 		Hero = FindObjectOfType<Controller>();
+		//Grab RGB2D
 		bossBody = GetComponent<Rigidbody2D>();
+
+		//Grab an Array of the JumpPoint
 		jumpLoc = GameObject.FindGameObjectsWithTag ("JumpLoc");
+
+		//Multiply moveSpeed by Confidence factor
 		moveSpeed = moveSpeed + confidence.GetComponent<Confidence> ().getConfidence ()/50f;
 		myAnimator.SetBool("falling", false);
 	}
 
 
+
+	//----The Flow of Fixed update is basically this:
+	// If not constructing or Healing --> go through decision Tree
+	// If constructing keep looping on the steps until they are completed, uninterrupted
+	//		- once construction is completed launched back down onto the lower platforms to return to the Tree
+	// Healing is less strenuous than constructing. Healing takes 2s to do
+	//		- but once that second is up go back to search tree
 	void FixedUpdate(){
 		
-		// Code for the jump animations.
+		//Animation Checks
 		if (isGrounded)
 		{
 			// The jump animation is set to false when on the ground.
@@ -102,9 +114,41 @@ public class Boss2AI : MonoBehaviour
 		}
 		yDirection = transform.position.y;
 
-
+		//This can get a bit confusing so Ill breakdown above here
+		/**
+		*So If we want to construct a Bomber we continue to loop in this if statement and only proceed
+		*to the next if the step == true (complete)
+		*
+		***STEP ONE
+		*	-Find out which location we are building at
+		*		-if bombers == 0, whichever is closer
+		*		-if bombers == 1, whichever platform is not preoccupied
+		*	-Go to that locations jump spot,
+		*	-Once there step one is complete
+		*
+		***STEP TWO
+		*	- JUMP(), large jumpforce to ensure height
+		*	-step two complete
+		*
+		***STEP THREE
+		*	- FlipCorrectWay() to make sure we are facing the appropriate direction to build the Bomber
+		*	- initialize a time for it to take to "build"
+		*	- step three complete
+		*
+		***STEP FOUR
+		*	- once time waited/ "builded" spawn the bomber
+		*	- step four complete
+		*
+		***STEP FIVE
+		*	- Flip around
+		*	- determine which side of map boss is on
+		*	- push him off top platform into middle of map
+		*	- reset all flags
+		*	- constructing now = false
+		*	- step five complete
+		*/
 		if (constructing == true) {
-			if (step1 == false) {
+			if (step1 == false) {				//STEP ONE
 				Transform Target;
 				Target = GetCloserJumpLoc ();
 				if (transform.position.x != Target.position.x) {
@@ -112,22 +156,26 @@ public class Boss2AI : MonoBehaviour
 				} else {
 					step1 = true;
 				}
-			} else if (step2 == false) {
+
+			} else if (step2 == false) {		//STEP TWO
 				Jump ();
 				step2 = true;
-			} else if (step3 == false) {
+
+			} else if (step3 == false) {		//STEP THREE
 				flipCorrectWay ();
 				//start countdown for delay
 				nextDo = Time.time + doRate;
 				step3 = true;
-			} else if (step4 == false) {
+
+			} else if (step4 == false) {		//STEP FOUR
 				//Animation for construction.
 				if (Time.time > nextDo) {
 					//spawn Bomber
 					var clone = Instantiate (bomber, firePoint.position, firePoint.rotation);
 					step4 = true;
 				}
-			} else if (step5 == false) {
+
+			} else if (step5 == false) {		//STEP FIVE
 				leftOrRight = leftOrRight * -1;
 				if (mirrorPoint.transform.position.x < this.transform.position.x) {
 					bossBody.AddForce (new Vector2 (leftOrRight * pushForce, 0f));
@@ -152,11 +200,9 @@ public class Boss2AI : MonoBehaviour
 			tree.Search ();		
 		}
 
-
-
-
 	}
 
+	// When leaving platform, change isGrounded
 	void OnCollisionExit2D(Collision2D col)
 	{
 		if (col.gameObject.tag == "Platform")
@@ -164,7 +210,7 @@ public class Boss2AI : MonoBehaviour
 			isGrounded = false;
 		}
 	}
-
+	//
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.gameObject.tag == "Platform")
@@ -175,10 +221,11 @@ public class Boss2AI : MonoBehaviour
 
 	/*
 	*
-	*		Decision Methods
+	***********************		Decision Methods    ***************************************
 	*
 	*/
 
+	//Detect whether the Hero is within a decided radius
 	public bool heroNear(){
 		HeroNear = Physics2D.OverlapCircle(transform.position, HeroNearDistance, isPlayer);
 
@@ -190,6 +237,8 @@ public class Boss2AI : MonoBehaviour
 
 	}
 
+
+	//Detect if health is below a certain threshold
 	public bool healthLow(){
 		bossHealth = GetComponent<BossOneHealth> ().bossHealth;
 		if (bossHealth <= 20f)
@@ -204,12 +253,14 @@ public class Boss2AI : MonoBehaviour
 
 	/*
 	*
-	*		Action Methods
+	***********************		Action Methods    ***************************************
 	*
 	*/
 
 	//run away  from player, might add a follow up if cornered try to fight its way out, for balance
 	public void getAway(){
+
+		//Determine whether hero is left or right of you
 
 		if (Hero.transform.position.x < transform.position.x)
 		{
@@ -222,7 +273,8 @@ public class Boss2AI : MonoBehaviour
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 
-		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0f));
+//*****************************This is where the boss should run away but he's not into it 
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
 		// This is the running animation.
 		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 	}
@@ -231,6 +283,8 @@ public class Boss2AI : MonoBehaviour
 	//Shoot projectile, might add alternate shoot and lob projectiles later
 	public void Attack(){
 
+		//Determine whether hero is left or right of you
+
 		if (Hero.transform.position.x < transform.position.x)
 		{
 			leftOrRight = -1;
@@ -242,12 +296,15 @@ public class Boss2AI : MonoBehaviour
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 
-		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0f));
+		/**
+		 * this is where AddForce is not digging it, for now using transform
+		*/
+		//GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
+		transform.localPosition = Vector3.MoveTowards (transform.localPosition, Hero.transform.position, moveSpeed * Time.deltaTime);
 		// This is the running animation.
 		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 		Shoot ();
-
-	}
+}
 
 
 	//A slow ticking healing 
@@ -259,9 +316,7 @@ public class Boss2AI : MonoBehaviour
 
 	//Construct 
 	//I want to check if two constructed,
-	//if not, run to jump point, jump
-	//face appropriate way, construct,
-	//move off top platform
+	//if not, flag constructing
 	public void Construct(){
 
 		GameObject[] arr;
@@ -294,10 +349,18 @@ public class Boss2AI : MonoBehaviour
 		jump = false;
 	}
 
+	//This is only ever called if bombers < 2
+	//	-if bombers == 1
+	//		-find out which side existing bomber is on and pass the opposite jump location
+	//	-else (bombers = 0)
+	//		-return the closest jump location
 	//Finds out which jump point it is closest too.
 	public Transform GetCloserJumpLoc(){
+
+		//Grabs an array of the Bombers currently on the map
 		GameObject[] arr;
 		arr = GameObject.FindGameObjectsWithTag("Bomber");
+
 
 		if (arr.Length == 1) {
 			GameObject bomber = arr [0];
@@ -307,7 +370,7 @@ public class Boss2AI : MonoBehaviour
 				return rightJumpPoint;
 			}
 		} else {
-
+			//Returns the closest jump location
 			GameObject closest = null;
 			float distance = Mathf.Infinity;
 
