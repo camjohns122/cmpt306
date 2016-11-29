@@ -31,4 +31,8 @@ public class BossOneHealth : MonoBehaviour
 	{
 		return bossHealth;
 	}
+
+	public void heal(float healAmount){
+		bossHealth = bossHealth + healAmount;
+	}
 }
