@@ -28,8 +28,9 @@ public class Boss2AI : MonoBehaviour
 	public float bossHealth;
 	private float pushForce = 500f;
 	private float jumpForce = 1200f;
-	public float acceleration = 5f;
-	public float moveSpeed = 6f;
+	public float acceleration = 2f;
+	public float moveSpeed = 3f;
+	private float yDirection;
 
 	//Shooting Variables
 	public Transform firePoint; 		// The starting point where the projectile is fired from.
@@ -77,12 +78,12 @@ public class Boss2AI : MonoBehaviour
 		bossBody = GetComponent<Rigidbody2D>();
 		jumpLoc = GameObject.FindGameObjectsWithTag ("JumpLoc");
 		moveSpeed = moveSpeed + confidence.GetComponent<Confidence> ().getConfidence ()/50f;
+		myAnimator.SetBool("falling", false);
 	}
 
 
 	void FixedUpdate(){
-		// This is the running animation.
-		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
+		
 		// Code for the jump animations.
 		if (isGrounded)
 		{
@@ -95,6 +96,11 @@ public class Boss2AI : MonoBehaviour
 			myAnimator.SetBool("jump", true);
 		}
 
+		if (transform.position.y - yDirection < 0)
+		{
+			myAnimator.SetBool("falling", true);
+		}
+		yDirection = transform.position.y;
 
 
 		if (constructing == true) {
@@ -216,8 +222,9 @@ public class Boss2AI : MonoBehaviour
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 
-		bossBody.AddForce(new Vector2(((leftOrRight * moveSpeed) - bossBody.velocity.x) * acceleration, 0));
-
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0f));
+		// This is the running animation.
+		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 	}
 
 	//Run at Player 
@@ -235,7 +242,9 @@ public class Boss2AI : MonoBehaviour
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 
-		bossBody.AddForce(new Vector2(((leftOrRight * moveSpeed) - bossBody.velocity.x) * acceleration, 0));
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0f));
+		// This is the running animation.
+		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 		Shoot ();
 
 	}
