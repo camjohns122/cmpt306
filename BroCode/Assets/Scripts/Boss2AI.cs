@@ -22,18 +22,20 @@ public class Boss2AI : MonoBehaviour
 	private bool isGrounded = true;		// Check if the enemy is on a platform.
 	private bool jump;				// Jump is active.
 	public float bossHealth;				//Health
-	private float pushForce = 500f;			//used simply to push boss back down off highest platform
+	private float pushForce = 400f;			//used simply to push boss back down off highest platform
 	private float jumpForce = 1200f;		//Big ol jump force for boss to jump to highest 
 	public float acceleration = 2f;	
 	public float moveSpeed = 3f;
 	private float yDirection;
+
+
 
 	//Shooting Variables
 	public Transform firePoint; 		// The starting point where the projectile is fired from.
 	public GameObject b2_projectile; 		// The item that the enemy shoots.
 
 	//Enemy Fire Rate
-	public float fireRate = 4f;
+	public float fireRate = 1f;
 	public float nextfire = 0.0F;
 
 	//Enemy Healing
@@ -296,11 +298,17 @@ public class Boss2AI : MonoBehaviour
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 
+		if(Hero.transform.position.y > transform.position.y){
+			if(Time.time > nextDo){
+				nextDo = Time.time + doRate;
+				bossBody.AddForce (transform.up * (jumpForce/2f));
+			}
+		}
 		/**
 		 * this is where AddForce is not digging it, for now using transform
 		*/
-		//GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
-		transform.localPosition = Vector3.MoveTowards (transform.localPosition, Hero.transform.position, moveSpeed * Time.deltaTime);
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
+		//transform.localPosition = Vector3.MoveTowards (transform.localPosition, Hero.transform.position, moveSpeed * Time.deltaTime);
 		// This is the running animation.
 		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 		Shoot ();
@@ -324,6 +332,7 @@ public class Boss2AI : MonoBehaviour
 
 		if (arr.Length < 2) {
 			constructing = true;
+			bossBody.velocity = new Vector3 (0,0,0);
 		} else {
 
 			Shoot ();//I think this is a good time to lob.
