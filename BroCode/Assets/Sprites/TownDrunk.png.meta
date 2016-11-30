@@ -1,9 +1,18 @@
 fileFormatVersion: 2
 guid: 2690b0a545f7249159741b57bc554319
-timeCreated: 1480362718
+timeCreated: 1480539557
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: TownDrunk_0
+    21300002: TownDrunk_1
+    21300004: TownDrunk_2
+    21300006: TownDrunk_3
+    21300008: TownDrunk_4
+    21300010: TownDrunk_5
+    21300012: TownDrunk_6
+    21300014: TownDrunk_7
+    21300016: TownDrunk_8
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +39,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +47,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -51,7 +60,124 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: TownDrunk_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 272
+        width: 84
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TownDrunk_1
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 272
+        width: 84
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TownDrunk_2
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 268
+        width: 88
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TownDrunk_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 140
+        width: 76
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TownDrunk_4
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 144
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TownDrunk_5
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 144
+        width: 84
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TownDrunk_6
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 16
+        width: 84
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TownDrunk_7
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 16
+        width: 92
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TownDrunk_8
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 16
+        width: 84
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
