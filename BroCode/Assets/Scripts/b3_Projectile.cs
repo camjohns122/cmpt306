@@ -7,7 +7,6 @@ public class b3_Projectile : MonoBehaviour {
 	public Boss3AI boss;				// Projectile direction is based on the Boss's direction.
 	public Transform firePoint;			// The starting point where the projectile is fired from. (Right of boss)
 	public Transform firePoint2;		// The starting point where the projectile is fired from. (Left of boss)
-	public Transform firePoint3;		// The starting point where the projectile is fired from. (Above boss)
 
 	// Use this for initialization
 	void Start () 

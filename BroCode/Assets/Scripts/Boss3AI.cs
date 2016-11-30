@@ -24,7 +24,6 @@ public class Boss3AI : MonoBehaviour
 
 	public Transform firePoint; 			// The starting point where the projectile is fired from. (Right of boss)
 	public Transform firePoint2;			// The starting point where the projectile is fired from. (Left of boss)
-	public Transform firePoint3;			// The starting point where the projectile is fired from. (Above boss)
 	public GameObject projectile; 			// The item that the enemy shoots.
 
 	private float yDirection;               // used to detect when player begins falling
