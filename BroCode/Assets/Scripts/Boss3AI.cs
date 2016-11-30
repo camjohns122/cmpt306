@@ -22,8 +22,9 @@ public class Boss3AI : MonoBehaviour
 
 	public GameObject confidence;			// Make sure to attach confidence.
 
-	public Transform firePoint; 			// The starting point where the projectile is fired from.
-	public Transform firePoint2;			// Another starting point where the projectile is fired from.
+	public Transform firePoint; 			// The starting point where the projectile is fired from. (Right of boss)
+	public Transform firePoint2;			// The starting point where the projectile is fired from. (Left of boss)
+	public Transform firePoint3;			// The starting point where the projectile is fired from. (Above boss)
 	public GameObject projectile; 			// The item that the enemy shoots.
 
 	private float yDirection;               // used to detect when player begins falling
@@ -90,7 +91,6 @@ public class Boss3AI : MonoBehaviour
 			{
 				var clone = Instantiate (projectile, firePoint.position, firePoint.rotation);
 				var clone2 = Instantiate (projectile, firePoint2.position, firePoint2.rotation);
-
 			}
 		}
 		if (transform.position.y - yDirection < 0)
