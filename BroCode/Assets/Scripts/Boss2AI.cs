@@ -28,10 +28,15 @@ public class Boss2AI : MonoBehaviour
 	public float moveSpeed = 3f;
 	private float yDirection;
 
+    private float yDirection2;          // to determine when to switch from jump animation
+    private float xDirection;           // to determine when to switch from run to idle animation
 
 
-	//Shooting Variables
-	public Transform firePoint; 		// The starting point where the projectile is fired from.
+
+
+
+    //Shooting Variables
+    public Transform firePoint; 		// The starting point where the projectile is fired from.
 	public GameObject b2_projectile; 		// The item that the enemy shoots.
 
 	//Enemy Fire Rate
@@ -86,38 +91,61 @@ public class Boss2AI : MonoBehaviour
 		//Multiply moveSpeed by Confidence factor
 		moveSpeed = moveSpeed + confidence.GetComponent<Confidence> ().getConfidence ()/50f;
 		myAnimator.SetBool("falling", false);
-	}
 
 
+        xDirection = transform.position.x;
+        yDirection2 = transform.position.y;
 
-	//----The Flow of Fixed update is basically this:
-	// If not constructing or Healing --> go through decision Tree
-	// If constructing keep looping on the steps until they are completed, uninterrupted
-	//		- once construction is completed launched back down onto the lower platforms to return to the Tree
-	// Healing is less strenuous than constructing. Healing takes 2s to do
-	//		- but once that second is up go back to search tree
-	void FixedUpdate(){
-		
-		//Animation Checks
-		if (isGrounded)
-		{
-			// The jump animation is set to false when on the ground.
-			myAnimator.SetBool ("jump", false);
-		}
-		else
-		{
-			// The jump animation is set to true when in the air.
-			myAnimator.SetBool("jump", true);
-		}
+        InvokeRepeating("velocityCheck", 0.0f, 0.5f);   // change xDirection and yDirection 2 times a second to get a velocity
+    }
 
-		if (transform.position.y - yDirection < 0)
-		{
-			myAnimator.SetBool("falling", true);
-		}
-		yDirection = transform.position.y;
 
-		//This can get a bit confusing so Ill breakdown above here
-		/**
+    //----The Flow of Fixed update is basically this:
+    // If not constructing or Healing --> go through decision Tree
+    // If constructing keep looping on the steps until they are completed, uninterrupted
+    //		- once construction is completed launched back down onto the lower platforms to return to the Tree
+    // Healing is less strenuous than constructing. Healing takes 2s to do
+    //		- but once that second is up go back to search tree
+    void FixedUpdate(){
+
+        //Animation Checks
+        if (isGrounded)
+        {
+            // The jump animation is set to false when on the ground.
+            myAnimator.SetBool("jump", false);
+        }
+        else
+        {
+            // The jump animation is set to true when in the air.
+            //myAnimator.SetBool("jump", true);
+        }
+
+        if (transform.position.y - yDirection < 0)
+        {
+            myAnimator.SetBool("falling", true);
+        }
+        yDirection = transform.position.y;
+
+        if (Mathf.Abs(transform.position.x - xDirection) > 0.3)
+        {
+            myAnimator.SetFloat("speed", 1.0f);
+        }
+        else if (Mathf.Abs(transform.position.x - xDirection) <= 0.3)
+        {
+            myAnimator.SetFloat("speed", 0.0f);
+        }
+
+        if (Mathf.Abs(transform.position.y - yDirection2) <= 0.3)
+        {
+            myAnimator.SetBool("jump", false);
+        }
+        else if (Mathf.Abs(transform.position.y - yDirection2) > 0.3)
+        {
+            myAnimator.SetBool("jump", true);
+        }
+
+        //This can get a bit confusing so Ill breakdown above here
+        /**
 		*So If we want to construct a Bomber we continue to loop in this if statement and only proceed
 		*to the next if the step == true (complete)
 		*
@@ -149,7 +177,7 @@ public class Boss2AI : MonoBehaviour
 		*	- constructing now = false
 		*	- step five complete
 		*/
-		if (constructing == true) {
+        if (constructing == true) {
 			if (step1 == false) {				//STEP ONE
 				Transform Target;
 				Target = GetCloserJumpLoc ();
@@ -278,7 +306,7 @@ public class Boss2AI : MonoBehaviour
 //*****************************This is where the boss should run away but he's not into it 
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
 		// This is the running animation.
-		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
+		//myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 	}
 
 	//Run at Player 
@@ -310,7 +338,7 @@ public class Boss2AI : MonoBehaviour
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * moveSpeed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
 		//transform.localPosition = Vector3.MoveTowards (transform.localPosition, Hero.transform.position, moveSpeed * Time.deltaTime);
 		// This is the running animation.
-		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
+		//myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 		Shoot ();
 }
 
@@ -356,15 +384,16 @@ public class Boss2AI : MonoBehaviour
 	public void Jump(){
 		bossBody.AddForce (transform.up * jumpForce);
 		jump = false;
-	}
+        myAnimator.SetBool("jump", true);
+    }
 
-	//This is only ever called if bombers < 2
-	//	-if bombers == 1
-	//		-find out which side existing bomber is on and pass the opposite jump location
-	//	-else (bombers = 0)
-	//		-return the closest jump location
-	//Finds out which jump point it is closest too.
-	public Transform GetCloserJumpLoc(){
+    //This is only ever called if bombers < 2
+    //	-if bombers == 1
+    //		-find out which side existing bomber is on and pass the opposite jump location
+    //	-else (bombers = 0)
+    //		-return the closest jump location
+    //Finds out which jump point it is closest too.
+    public Transform GetCloserJumpLoc(){
 
 		//Grabs an array of the Bombers currently on the map
 		GameObject[] arr;
@@ -441,4 +470,11 @@ public class Boss2AI : MonoBehaviour
 		tree.setLeft (b1);
 		tree.setRight (b2);
 	}
+
+    // called twice a second to update variables to check velocity
+    void velocityCheck()
+    {
+        xDirection = transform.position.x;
+        yDirection2 = transform.position.y;
+    }
 }
