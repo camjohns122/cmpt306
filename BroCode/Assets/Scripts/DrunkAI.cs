@@ -12,9 +12,9 @@ public class DrunkAI : MonoBehaviour
 	private int leftOrRight = 0;			// Input for left, right, and stationary.
 	private bool isGrounded = false;		// Check if the enemy is on a platform.
 	private bool jump = false;				// Jump is active.
-	public float speed = 1f;				// Running speed.
+	public float speed = 3f;				// Running speed.
 	private float jumpForce = 100f;		//Big ol jump force for boss to jump to highest 
-	public float acceleration = 1f;			// Acceleration.
+	public float acceleration = 2f;			// Acceleration.
 	private float yDirection;               // used to detect when player begins falling
 
 
@@ -35,11 +35,14 @@ public class DrunkAI : MonoBehaviour
 	public float chargeTime = 1.75f;		//time to stand still and charge before attack
 	public float rageCharged = 0.0f;		//time when the rage will be charged
 
-	public float rageSpacing = 0.25f;       //Spacing for rage attacks to fire
+	public float rageSpacing = 0.5f;       //Spacing for rage attacks to fire
 	public float nextRageFire = 0.0f;		//keeps track of when the next rage projectile spawned
 
 	public float rageDone = 0.0f;
-	public float rageDuration = 1f;
+	public float rageDuration = 2f;
+
+	public bool raged = true;
+	public bool charged = true;
 
 	//doing thing Cooldown
 	public float doRate = 2f;
@@ -57,17 +60,12 @@ public class DrunkAI : MonoBehaviour
 
 
 
-
-
-
-
-
 	// Use this for initialization
 	void Start () {
 
 		// Initializing the animator.
 		myAnimator = GetComponent<Animator>();
-
+		Hero = FindObjectOfType<Controller>();
 		myAnimator.SetBool("falling", false);
 
 		//Initialize the Tree and call for it to build
@@ -82,7 +80,7 @@ public class DrunkAI : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void fixedUpdate () {
+	void FixedUpdate () {
 		
 		//Animation Checks
 		if (isGrounded)
@@ -101,7 +99,6 @@ public class DrunkAI : MonoBehaviour
 			myAnimator.SetBool("falling", true);
 		}
 		yDirection = transform.position.y;
-
 
 		tree.Search ();
 
@@ -134,7 +131,10 @@ public class DrunkAI : MonoBehaviour
 	//Check if Rage is off CD
 	public bool rageOffCD(){
 		if (Time.time > nextRage) {
-			rageCharged = Time.time + chargeTime;
+			if (raged == true) {
+				rageCharged = Time.time + chargeTime;
+				raged = false;
+			}
 			Debug.Log ("rage ready");
 			return true;
 		} else {
@@ -146,8 +146,11 @@ public class DrunkAI : MonoBehaviour
 	//Check if Rage is done charging
 	public bool rageCharging(){
 		if (Time.time > rageCharged) {
-			nextRageFire = Time.time + rageSpacing;
-			rageDone = Time.time + rageDuration;
+			if(charged == true){
+				nextRageFire = Time.time + rageSpacing;
+				rageDone = Time.time + rageDuration;
+				charged = false;
+			}
 			return true;
 		} else {
 			//Play charging animation
@@ -175,12 +178,26 @@ public class DrunkAI : MonoBehaviour
 
 	//Rage attack that shoots and lobs two bottle alternatively
 	public void Rage(){
+
+		if (Hero.transform.position.x < transform.position.x)
+		{
+			leftOrRight = -1;
+			transform.localScale = new Vector3(-1f, 1f, 1f);
+		}
+		else if (Hero.transform.position.x > transform.position.x)
+		{
+			leftOrRight = 1;
+			transform.localScale = new Vector3(1f, 1f, 1f);
+		}
+
+		drunkBody.velocity = new Vector3 (0,0,0);
+
 		if (Time.time > nextRageFire && shoot == true) {
 			nextRageFire = Time.time + rageSpacing;
 			Shoot ();
 			shoot = false;
 			lob = true;
-		} else if (Time.time > nextRageFire && shoot == true) {
+		} else if (Time.time > nextRageFire && lob == true) {
 			nextRageFire = Time.time + rageSpacing;
 			Lob ();
 			shoot = true;
@@ -189,6 +206,8 @@ public class DrunkAI : MonoBehaviour
 
 		if(Time.time > rageDone){
 			nextRage = Time.time + rageCD;
+			raged = true;
+			charged = true;
 		}
 
 	}
@@ -251,7 +270,7 @@ public class DrunkAI : MonoBehaviour
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 
-		drunkBody.AddForce(new Vector2(((leftOrRight * speed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * speed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
 		// This is the running animation.
 		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 
@@ -279,7 +298,7 @@ public class DrunkAI : MonoBehaviour
 
 
 	//BuildDecisionTree
-	void BuildDecisionTree(){
+	public void BuildDecisionTree(){
 		
 		DecisionTree b1 = new DecisionTree ();
 		DecisionTree b2 = new DecisionTree ();
@@ -305,7 +324,7 @@ public class DrunkAI : MonoBehaviour
 		tree.setLeft (b1);
 		tree.setRight (b2);
 
-		Debug.Log ("TreeBuilt");
+
 	}
 
 }

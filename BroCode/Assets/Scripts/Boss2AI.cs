@@ -295,12 +295,12 @@ public class Boss2AI : MonoBehaviour
 		if (Hero.transform.position.x < transform.position.x)
 		{
 			leftOrRight = 1;
-			transform.localScale = new Vector3(-1f, 1f, 1f);
+			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 		else if (Hero.transform.position.x > transform.position.x)
 		{
 			leftOrRight = -1;
-			transform.localScale = new Vector3(1f, 1f, 1f);
+			transform.localScale = new Vector3(-1f, 1f, 1f);
 		}
 
 //*****************************This is where the boss should run away but he's not into it 
