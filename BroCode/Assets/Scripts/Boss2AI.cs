@@ -25,7 +25,7 @@ public class Boss2AI : MonoBehaviour
 	private float pushForce = 400f;			//used simply to push boss back down off highest platform
 	private float jumpForce = 1200f;		//Big ol jump force for boss to jump to highest 
 	public float acceleration = 2f;	
-	public float moveSpeed = 3f;
+	public float moveSpeed = 3.5f;
 	private float yDirection;
 
     private float yDirection2;          // to determine when to switch from jump animation

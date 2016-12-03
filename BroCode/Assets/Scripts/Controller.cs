@@ -27,7 +27,6 @@ public class Controller : MonoBehaviour
     private float sideAngle;
 
 
-
 	void Start()
 	{
 		// Initializing the animator.
@@ -169,7 +168,7 @@ public class Controller : MonoBehaviour
 		{
 			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpSpeed);
 			jump = false;
-			jumpTimer = 0f;
+			//jumpTimer = 0f;
 		}
 
 		// This moves the player left or right.
@@ -190,6 +189,7 @@ public class Controller : MonoBehaviour
 			// This makes it so the player has a max jump height.
 			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpSpeed);
 			jump = false;
+			isGrounded = false;
 		}
 
 		// Cancel the jump when the button is no longer pressed.
@@ -203,7 +203,14 @@ public class Controller : MonoBehaviour
 			}
 
 			jumpCancel = false;
-			jumpTimer = 0f;
+			//jumpTimer = 0f;
+		}
+
+		// If the player has been not grounded for 2 seconds, make the player grounded.
+		// This fixes the bug if the player is ever stuck being not grounded.
+		if (!isGrounded && ((Time.time - jumpTimer) > 2f))
+		{
+			isGrounded = true;
 		}
 	}
 }
