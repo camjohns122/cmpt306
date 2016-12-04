@@ -25,9 +25,11 @@ public class ProjectileController : MonoBehaviour {
 		GetComponent<Rigidbody2D>().velocity = new Vector2 (speed, GetComponent<Rigidbody2D>().velocity.y);﻿
 	}
 
-	// Destroy the projectile when it makes contact with something.
+	// Destroy the projectile when it makes contact with anything except Clouds.
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		Destroy (gameObject);
+		if (other.gameObject.layer != LayerMask.NameToLayer("Cloud")) {
+			Destroy (gameObject);
+		}
 	}
 }
