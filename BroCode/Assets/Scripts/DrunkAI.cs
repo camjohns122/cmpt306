@@ -58,6 +58,9 @@ public class DrunkAI : MonoBehaviour
 	public float HeroNearDistance;
 	public bool HeroNear;				// Make sure to attach the player.
 
+	public float HeroRangeDistance;
+	public bool HeroRange;				// Make sure to attach the player.
+
 
 
 	// Use this for initialization
@@ -170,6 +173,19 @@ public class DrunkAI : MonoBehaviour
 
 	}
 
+	//Detect whether the Hero is within a decided radius
+	public bool heroInRange(){
+		HeroRange = Physics2D.OverlapCircle(transform.position, HeroRangeDistance, isPlayer);
+
+		if (HeroRange) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+
 	/*
 	*
 	***********************		Action Methods    ***************************************
@@ -223,7 +239,7 @@ public class DrunkAI : MonoBehaviour
 
 	//Run at hero and throw a bottle straight forward
 	public void fireAttack(){
-		Debug.Log ("Fire");
+		
 
 		if (Hero.transform.position.x < transform.position.x)
 		{
@@ -257,28 +273,30 @@ public class DrunkAI : MonoBehaviour
 
 	//back away from hero and lob a bottle at him
 	public void lobAttack(){
-		Debug.Log ("lob");
 
-		if (Hero.transform.position.x < transform.position.x)
-		{
+		if (Hero.transform.position.x < transform.position.x) {
 			leftOrRight = -1;
-			transform.localScale = new Vector3(-1f, 1f, 1f);
-		}
-		else if (Hero.transform.position.x > transform.position.x)
-		{
+			transform.localScale = new Vector3 (-1f, 1f, 1f);
+		} else if (Hero.transform.position.x > transform.position.x) {
 			leftOrRight = 1;
-			transform.localScale = new Vector3(1f, 1f, 1f);
+			transform.localScale = new Vector3 (1f, 1f, 1f);
 		}
 
-		GetComponent<Rigidbody2D>().AddForce(new Vector2(((leftOrRight * speed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
+		GetComponent<Rigidbody2D> ().AddForce (new Vector2 (((leftOrRight * speed) - GetComponent<Rigidbody2D> ().velocity.x) * acceleration, 0));
 		// This is the running animation.
-		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
+		myAnimator.SetFloat ("speed", Mathf.Abs (leftOrRight));
 
 
-		if(Time.time > nextAttack){
+		if (Time.time > nextAttack) {
 			nextAttack = Time.time + attackRate;
 			Lob ();	
 		}
+
+	}
+
+	//jus do nothing if hero is too far away
+	public void Chill(){
+		drunkBody.velocity = new Vector3 (0,0,0);	
 	}
 
 
@@ -299,7 +317,9 @@ public class DrunkAI : MonoBehaviour
 
 	//BuildDecisionTree
 	public void BuildDecisionTree(){
-		
+
+		DecisionTree a1 = new DecisionTree ();
+		DecisionTree a2 = new DecisionTree ();
 		DecisionTree b1 = new DecisionTree ();
 		DecisionTree b2 = new DecisionTree ();
 		DecisionTree c1 = new DecisionTree ();
@@ -320,9 +340,15 @@ public class DrunkAI : MonoBehaviour
 		b2.setLeft (c3);
 		b2.setRight (c4);
 
-		tree.dec = rageOffCD;
-		tree.setLeft (b1);
-		tree.setRight (b2);
+		a1.dec = rageOffCD;
+		a1.setLeft (b1);
+		a1.setRight (b2);
+
+		a2.act = Chill;
+
+		tree.dec = heroInRange;
+		tree.setLeft (a1);
+		tree.setRight (a2);
 
 
 	}

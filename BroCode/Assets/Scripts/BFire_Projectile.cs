@@ -6,6 +6,12 @@ public class BFire_Projectile : MonoBehaviour {
 	public float speed;					// Speed of projectile.
 	public DrunkAI drunk;				// Projectile direction is based on the Boss's direction.
 
+	// Make sure to attach confidence.
+	public GameObject confidence;
+
+	// The amount of confidence you lose when you get hit by a chicken.
+	public float confidenceToLose;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -34,7 +40,24 @@ public class BFire_Projectile : MonoBehaviour {
 	// Destroy the projectile when it makes contact with something.
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		Destroy (gameObject);
+		// If the Egg hits the player, the player loses confidence.
+		if (col.gameObject.tag == "Player")
+		{
+			confidence.GetComponent<Confidence>().loseConfidence (confidenceToLose);
+			Destroy (gameObject);
+		}
+
+		// If the Egg gets hit by the player's projectile, destroys both.
+		if (col.gameObject.tag == "Projectile")
+		{
+			Destroy (gameObject);
+		}
+
+		// If the Egg hits ground, or platform, destroys itself.
+		if (col.gameObject.tag == "Platform")
+		{
+			Destroy (gameObject);
+		}
 	}
 }
 
