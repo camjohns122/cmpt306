@@ -52,7 +52,6 @@ public class BFire_Projectile : MonoBehaviour {
 			Destroy (gameObject);
 		}
 
-		// If the Egg gets hit by the player's projectile, destroys both.
 		if (col.gameObject.tag == "Projectile")
 		{
 			Destroy (gameObject);
@@ -60,6 +59,14 @@ public class BFire_Projectile : MonoBehaviour {
 
 		// If the Egg hits ground, or platform, destroys itself.
 		if (col.gameObject.tag == "Platform")
+		{
+			Destroy (gameObject);
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "Projectile")
 		{
 			Destroy (gameObject);
 		}
