@@ -1,13 +1,15 @@
 fileFormatVersion: 2
-guid: a53ec2845aec348be8f139de30d48033
-timeCreated: 1481053917
+guid: 4853c03102bf04a429c638d79146e2d2
+timeCreated: 1481126198
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: introBubbles-01_0
-    21300002: introBubbles-01_1
-    21300004: introBubbles-01_2
-    21300006: introBubbles-01_3
+    21300000: speechBubbles-01_0
+    21300002: speechBubbles-01_1
+    21300004: speechBubbles-01_2
+    21300006: speechBubbles-01_3
+    21300008: speechBubbles-01_4
+    21300010: speechBubbles-01_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,52 +59,78 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: introBubbles-01_0
+      name: speechBubbles-01_0
       rect:
         serializedVersion: 2
-        x: 70
-        y: 1374
+        x: 133
+        y: 2498
+        width: 1104
+        height: 797
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: speechBubbles-01_1
+      rect:
+        serializedVersion: 2
+        x: 1391
+        y: 2498
         width: 1090
-        height: 795
+        height: 797
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: introBubbles-01_1
+      name: speechBubbles-01_2
       rect:
         serializedVersion: 2
-        x: 1314
-        y: 1374
-        width: 1102
-        height: 795
+        x: 163
+        y: 1317
+        width: 1098
+        height: 748
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: introBubbles-01_2
+      name: speechBubbles-01_3
       rect:
         serializedVersion: 2
-        x: 68
-        y: 193
-        width: 1096
-        height: 746
+        x: 1412
+        y: 1317
+        width: 1099
+        height: 748
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: introBubbles-01_3
+      name: speechBubbles-01_4
       rect:
         serializedVersion: 2
-        x: 1318
-        y: 193
-        width: 1096
-        height: 746
+        x: 133
+        y: 124
+        width: 1104
+        height: 797
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: speechBubbles-01_5
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 129
+        width: 1098
+        height: 757
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
