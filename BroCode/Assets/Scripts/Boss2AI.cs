@@ -208,7 +208,15 @@ public class Boss2AI : MonoBehaviour
 				//Animation for construction.
 				if (Time.time > nextDo) {
 					//spawn Bomber
-					var clone = Instantiate (bomber, firePoint.position, firePoint.rotation);
+					GameObject clone = (GameObject) Instantiate (bomber, firePoint.position, firePoint.rotation);
+                    
+                   // clone.AddComponent.<Rigidbody>();
+
+                    if (transform.position.x > 0)
+                        clone.transform.localScale = new Vector3(-1f, 1f, 1f);
+                    else
+                        clone.transform.localScale = new Vector3(1f, 1f, 1f);
+                    
 					step4 = true;
                 }
 
