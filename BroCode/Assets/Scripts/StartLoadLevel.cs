@@ -5,6 +5,9 @@ public class StartLoadLevel : MonoBehaviour {
 
 
 	public string levelToLoad;
+
+	public Transform Button;
+
 	// Use this for initialization
 	void Start () {
 
@@ -12,9 +15,11 @@ public class StartLoadLevel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButton(0)) {
-			Application.LoadLevel (levelToLoad);
-		}
+		
 	}
 		
+
+	void OnMouseDown(){
+		Application.LoadLevel (levelToLoad);
+	}
 }

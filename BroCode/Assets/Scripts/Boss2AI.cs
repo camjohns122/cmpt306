@@ -183,6 +183,13 @@ public class Boss2AI : MonoBehaviour
 				Target = GetCloserJumpLoc ();
 				if (transform.position.x != Target.position.x) {
 					transform.localPosition = Vector3.MoveTowards (transform.localPosition, Target.position, moveSpeed * Time.deltaTime);
+                   
+                    // check if need to flip for animation
+                    if (transform.position.x > Target.position.x && leftOrRight == -1)
+                        leftOrRight = -1;
+                    else if (transform.position.x < Target.position.x && leftOrRight == 1)
+                        leftOrRight = 1;
+
 				} else {
 					step1 = true;
 				}
@@ -203,10 +210,15 @@ public class Boss2AI : MonoBehaviour
 					//spawn Bomber
 					var clone = Instantiate (bomber, firePoint.position, firePoint.rotation);
 					step4 = true;
-				}
+                }
 
 			} else if (step5 == false) {		//STEP FIVE
 				leftOrRight = leftOrRight * -1;
+                if (leftOrRight == -1)
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
+                else
+                    transform.localScale = new Vector3(1f, 1f, 1f);
+
 				if (mirrorPoint.transform.position.x < this.transform.position.x) {
 					bossBody.AddForce (new Vector2 (leftOrRight * pushForce, 0f));
 				} else if (mirrorPoint.transform.position.x > this.transform.position.x) {

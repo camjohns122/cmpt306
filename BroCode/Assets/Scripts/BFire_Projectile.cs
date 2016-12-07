@@ -6,6 +6,8 @@ public class BFire_Projectile : MonoBehaviour {
 	public float speed;					// Speed of projectile.
 	public DrunkAI drunk;				// Projectile direction is based on the Boss's direction.
 
+	private Controller Hero;
+
 	// Make sure to attach confidence.
 	public GameObject confidence;
 
@@ -18,16 +20,19 @@ public class BFire_Projectile : MonoBehaviour {
 		// Finds the Object that has a BossOneAI script attached to it (Boss)
 		drunk = FindObjectOfType<DrunkAI> ();
 
+		Hero = FindObjectOfType<Controller>();
 		// If the boss is facing left, the projectile will shoot left. Otherwise, the projectile will shoot right.
-		if (drunk.transform.localScale.x < 0)
+		if (Hero.transform.position.x < transform.position.x)
 		{
 			speed = -speed;
 			GetComponent<SpriteRenderer> ().flipX = false;
 		}
-		else
+		else if (Hero.transform.position.x > transform.position.x)
 		{
+
 			GetComponent<SpriteRenderer> ().flipX = true;
 		}
+
 	}
 
 	// Update is called once per frame

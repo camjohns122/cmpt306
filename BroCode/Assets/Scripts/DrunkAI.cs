@@ -16,6 +16,8 @@ public class DrunkAI : MonoBehaviour
 	private float jumpForce = 100f;		//Big ol jump force for boss to jump to highest 
 	public float acceleration = 2f;			// Acceleration.
 	private float yDirection;               // used to detect when player begins falling
+    private float xDirection;           // to determine when to switch from run to idle animation
+
 
 
 	//Drunk Attack Variables
@@ -80,11 +82,14 @@ public class DrunkAI : MonoBehaviour
 		Hero = FindObjectOfType<Controller>();
 		//Grab RGB2D
 		drunkBody = GetComponent<Rigidbody2D>();
+        xDirection = transform.position.x;
+        InvokeRepeating("velocityCheck", 0.0f, 0.5f);   // change xDirection and yDirection 2 times a second to get a velocity
+
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		
+        myAnimator.SetBool("shooting", false);
 		//Animation Checks
 		if (isGrounded)
 		{
@@ -102,6 +107,16 @@ public class DrunkAI : MonoBehaviour
 			myAnimator.SetBool("falling", true);
 		}
 		yDirection = transform.position.y;
+       
+        
+        if (Mathf.Abs(transform.position.x - xDirection) > 0.3)
+        {
+            myAnimator.SetFloat("speed", 1.0f);
+        }
+        else if (Mathf.Abs(transform.position.x - xDirection) <= 0.3)
+        {
+            myAnimator.SetFloat("speed", 0.0f);
+        }
 
 		tree.Search ();
 
@@ -262,7 +277,7 @@ public class DrunkAI : MonoBehaviour
 		drunkBody.AddForce(new Vector2(((leftOrRight * speed) - GetComponent<Rigidbody2D>().velocity.x) * acceleration, 0));
 
 		// This is the running animation.
-		myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
+		//myAnimator.SetFloat("speed", Mathf.Abs(leftOrRight));
 
 		if(Time.time > nextAttack){
 			nextAttack = Time.time + attackRate;
@@ -284,7 +299,7 @@ public class DrunkAI : MonoBehaviour
 
 		GetComponent<Rigidbody2D> ().AddForce (new Vector2 (((leftOrRight * speed) - GetComponent<Rigidbody2D> ().velocity.x) * acceleration, 0));
 		// This is the running animation.
-		myAnimator.SetFloat ("speed", Mathf.Abs (leftOrRight));
+		//myAnimator.SetFloat ("speed", Mathf.Abs (leftOrRight));
 
 
 		if (Time.time > nextAttack) {
@@ -296,20 +311,22 @@ public class DrunkAI : MonoBehaviour
 
 	//jus do nothing if hero is too far away
 	public void Chill(){
-		drunkBody.velocity = new Vector3 (0,0,0);	
-	}
+		drunkBody.velocity = new Vector3 (0,0,0);
+        myAnimator.SetBool("shooting", false);
+    }
 
 
 	//Secondary Action Functions
 	public void Shoot(){
 
 		var clone = Instantiate (BFire_Projectile, firePoint.position, firePoint.rotation);
-
-	}
+        myAnimator.SetBool("shooting", true);
+    }
 
 	public void Lob(){
 
 		var clone = Instantiate (BLob_Projectile, lobPoint.position, lobPoint.rotation);
+        myAnimator.SetBool("shooting", true);
 
 	}
 
@@ -352,6 +369,11 @@ public class DrunkAI : MonoBehaviour
 
 
 	}
+    // called twice a second to update variables to check velocity
+    void velocityCheck()
+    {
+        xDirection = transform.position.x;
+    }
 
 }
 
