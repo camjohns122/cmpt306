@@ -29,7 +29,7 @@ public class PauseMenu : MonoBehaviour {
 		}
 
 		// If Esc key is pressed, it will either pause or resume
-		if (Input.GetKeyDown(KeyCode.Escape)) {
+		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown ("Cancel")) {
 			isPaused = !isPaused;
 		}
 	}
