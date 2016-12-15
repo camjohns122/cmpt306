@@ -71,7 +71,6 @@ public class DrunkAI : MonoBehaviour
 		// Initializing the animator.
 		myAnimator = GetComponent<Animator>();
 		Hero = FindObjectOfType<Controller>();
-		myAnimator.SetBool("falling", false);
 
 		//Initialize the Tree and call for it to build
 		tree = new DecisionTree ();
@@ -91,21 +90,8 @@ public class DrunkAI : MonoBehaviour
 	void FixedUpdate () {
         myAnimator.SetBool("shooting", false);
 		//Animation Checks
-		if (isGrounded)
-		{
-			// The jump animation is set to false when on the ground.
-			myAnimator.SetBool ("jump", false);
-		}
-		else
-		{
-			// The jump animation is set to true when in the air.
-			myAnimator.SetBool("jump", true);
-		}
 
-		if (transform.position.y - yDirection < 0)
-		{
-			myAnimator.SetBool("falling", true);
-		}
+		
 		yDirection = transform.position.y;
        
         
@@ -153,10 +139,8 @@ public class DrunkAI : MonoBehaviour
 				rageCharged = Time.time + chargeTime;
 				raged = false;
 			}
-			Debug.Log ("rage ready");
 			return true;
 		} else {
-			Debug.Log ("rage not ready");
 			return false;
 		}
 	}
